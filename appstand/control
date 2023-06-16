@@ -1,8 +1,8 @@
 Package: com.shadow.h5ggapp
-Name: H5GG跨进程普通版
+Name: H5GG
 Depends: 
 Architecture: iphoneos-arm
-Description: H5GG跨进程普通版(该版本支持iPad的原生分屏浮动, 如需全屏透明悬浮请使用H5GG跨进程悬浮版) Discord https://discord.gg/h5gg
+Description: standalone APP for jailbroken devices(compatible with iPad SlideOver/SplitView) Discord https://discord.gg/FAs4MH7HMc
 Maintainer: Shadow-
 Author: Shadow-
 Section: System
