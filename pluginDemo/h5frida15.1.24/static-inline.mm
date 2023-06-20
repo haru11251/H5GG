@@ -168,7 +168,7 @@ NSMutableData* add_hook_section(NSMutableData* macho)
     NSLog(@"macho %x %x", header->magic, macho.length);
     
     uint64_t vm_end = 0;
-    uint64_t min_section_offset = -1;
+    uint64_t min_section_offset = 0;
     struct segment_command_64* linkedit_seg = NULL;
     
     struct load_command* lc = (struct load_command*)((UInt64)header + sizeof(*header));
@@ -193,16 +193,15 @@ NSMutableData* add_hook_section(NSMutableData* macho)
                 printf("section[%d] = %s/%s offset=%x vm=%p:%p", j, sec[j].segname, sec[j].sectname,
                       sec[j].offset, sec[j].addr, sec[j].size);
                 
-                if((sec[j].flags & S_ZEROFILL)==0)
-                    if(min_section_offset<0 || min_section_offset>sec[j].offset)
-                         min_section_offset = sec[j].offset;
+                if(sec[j].offset && (min_section_offset==0 || min_section_offset>sec[j].offset))
+                        min_section_offset = sec[j].offset;
             }
         }
         
         lc = (struct load_command *) ((char *)lc + lc->cmdsize);
     }
     
-    if(min_section_offset<0 || !vm_end || !linkedit_seg) {
+    if(!min_section_offset || !vm_end || !linkedit_seg) {
         NSLog(@"cannot parse macho file!");
         return nil;
     }
